@@ -1,0 +1,9 @@
+allow_network: true
+hide_paths:
+  - ~/.ssh
+  - ~/.aws
+  - ~/.gnupg
+hide_env_keys:
+  - AWS_SECRET_ACCESS_KEY
+  - GITHUB_TOKEN
+  - NPM_TOKEN

@@ -1,0 +1,27 @@
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: builder
+    volumes:
+      - .:/src
+    working_dir: /src
+    command: ["go", "test", "./...", "-v"]
+
+  health:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: runtime
+    command: ["health"]
+
+  sandbox-pip:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: runtime
+    volumes:
+      - .:/work
+    working_dir: /work
+    command: ["run", "--dry-run", "echo", "installfence sandbox test"]
