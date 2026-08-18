@@ -2,7 +2,7 @@
 
 Sandboxed package installation for **pip**, **uv**, **npm**, and other package managers. Install scripts run inside a kernel-level sandbox where SSH keys, cloud credentials, and `.env` files are hidden.
 
-> **Status:** v0.2 — violation reporting, hide-env, fail-closed `--require-sandbox`, and a macOS sandbox-exec stub. PATH shims are next.
+> **Status:** v0.3 — violation reporting plus PATH shims (`installfence shim install`).
 
 ## Problem
 

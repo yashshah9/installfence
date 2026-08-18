@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.3.0] - 2026-08-19
+
+### Added
+- `installfence shim install|uninstall|status|env` PATH wrappers for pip/uv/npm/pnpm/yarn
+
 ## [0.2.0] - 2026-08-19
 
 ### Added

@@ -36,6 +36,7 @@ func newRoot() *cobra.Command {
 
 	root.AddCommand(healthCmd())
 	root.AddCommand(runCmd())
+	root.AddCommand(shimCmd())
 	root.AddCommand(wrapCmd("pip"))
 	root.AddCommand(wrapCmd("uv"))
 	root.AddCommand(wrapCmd("npm"))
