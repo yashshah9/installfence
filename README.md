@@ -2,19 +2,20 @@
 
 Sandboxed package installation for **pip**, **uv**, **npm**, and other package managers. Install scripts run inside a kernel-level sandbox where SSH keys, cloud credentials, and `.env` files are hidden.
 
-> **Status:** v0.1 foundation — bubblewrap sandbox wrapper with policy YAML; violation reporting and macOS backend are next.
+> **Status:** v0.2 — violation reporting, hide-env, fail-closed `--require-sandbox`, and a macOS sandbox-exec stub. PATH shims are next.
 
 ## Problem
 
 Package install hooks execute arbitrary code with your full user privileges. npm 12 now blocks lifecycle scripts by default, but approved scripts still run unsandboxed. **Python has no equivalent** — every `pip install` can read `~/.ssh` and environment secrets.
 
-## Key features (v0.1)
+## Key features (v0.2)
 
-- Wrap `pip`, `uv`, `npm`, or any command in a bubblewrap sandbox
-- Default policy hides `~/.ssh`, `~/.aws`, `~/.gnupg`, and secret env vars
-- YAML policy files for per-project customization
-- `--dry-run` mode for CI validation without bubblewrap
-- Graceful fallback when bubblewrap is not installed (with warning)
+- Wrap `pip`, `uv`, `npm`, or any command in a bubblewrap sandbox (Linux)
+- Default policy hides `~/.ssh`, `~/.aws`, `~/.gnupg`, and secret env vars at runtime
+- `--json-violations` / `--fail-on-violation` (exit 42) for CI
+- `--require-sandbox` instead of unsandboxed passthrough
+- macOS `sandbox-exec` backend when available
+- `--dry-run` mode without enforcing
 
 ## Architecture
 
@@ -79,6 +80,9 @@ hide_env_keys:
 |------|-------------|
 | `--policy PATH` | Custom policy YAML |
 | `--dry-run` | Show plan, don't enforce sandbox |
+| `--require-sandbox` | Fail if no sandbox backend is available |
+| `--fail-on-violation` | Exit 42 when a violation is recorded |
+| `--json-violations` | NDJSON violation stream on stderr |
 
 ## Usage
 
@@ -99,18 +103,18 @@ go test ./... -v
 
 ## Roadmap
 
-- [ ] Violation reporting (log blocked file access attempts)
-- [ ] macOS sandbox-exec backend
+- [x] Violation reporting (structured logs + CI exit code)
+- [x] macOS sandbox-exec backend (best-effort)
 - [ ] Shell shims for transparent PATH interception
 - [ ] Top-100 package compatibility test matrix
+
+## Known limitations (v0.2)
+
+- Linux bubblewrap needs user namespaces (Docker Compose `privileged: true` for real sandbox)
+- macOS Seatbelt profile is best-effort, not a full bwrap parity matrix
+- No install-script allowlist integration with npm 12
+- Native builds may need policy exceptions for compiler access
 
 ## License
 
 MIT
-
-## Known limitations (v0.1)
-
-- Linux bubblewrap only (macOS/Windows backends not implemented)
-- No install-script allowlist integration with npm 12
-- Native builds may need policy exceptions for compiler access
-- Violation reporting is not yet implemented

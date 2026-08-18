@@ -7,7 +7,7 @@ services:
     volumes:
       - .:/src
     working_dir: /src
-    command: ["go", "test", "./...", "-v"]
+    command: ["sh", "-c", "go mod tidy && go test ./... -v"]
 
   health:
     build:
@@ -21,7 +21,25 @@ services:
       context: .
       dockerfile: docker/Dockerfile
       target: runtime
+    privileged: true
     volumes:
       - .:/work
     working_dir: /work
     command: ["run", "--dry-run", "echo", "installfence sandbox test"]
+
+  env-probe:
+    # Real bwrap needs user namespaces; Docker Desktop requires privileged.
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: runtime
+    privileged: true
+    environment:
+      GITHUB_TOKEN: s3cret
+    command:
+      - run
+      - --require-sandbox
+      - --
+      - sh
+      - -c
+      - if [ -n "$$GITHUB_TOKEN" ]; then echo LEAKED; exit 1; else echo HIDDEN; fi
