@@ -30,7 +30,7 @@ func shimCmd() *cobra.Command {
 				return err
 			}
 			fmt.Printf("installed shims in %s\n", target)
-			fmt.Printf("add to your shell: eval \"$(installfence shim env --dir %s)\"\n", target)
+			fmt.Printf("add to your shell: eval \"$(installfence shim env --dir %q)\"\n", target)
 			return nil
 		},
 	})
@@ -51,6 +51,10 @@ func shimCmd() *cobra.Command {
 		Short: "Show whether shims are on PATH",
 		RunE: func(c *cobra.Command, args []string) error {
 			target := shimDir(dir)
+			if _, err := os.Stat(target); os.IsNotExist(err) {
+				fmt.Printf("shims not installed (run: installfence shim install --dir %q)\n", target)
+				return nil
+			}
 			for _, info := range shim.Status(target, os.Getenv("PATH")) {
 				flag := "not on PATH"
 				if info.OnPATH && info.BeforeOS {

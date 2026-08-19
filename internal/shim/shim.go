@@ -78,7 +78,7 @@ func Status(dir, pathEnv string) []Info {
 func EnvSnippet(dir, shell string) string {
 	switch shell {
 	case "fish":
-		return fmt.Sprintf("set -gx PATH %s $PATH\n", dir)
+		return fmt.Sprintf("set -gx PATH %s $PATH\n", quote(dir))
 	default:
 		return fmt.Sprintf("export PATH=%q:$PATH\n", dir)
 	}

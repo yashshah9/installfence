@@ -25,7 +25,7 @@ services:
     volumes:
       - .:/work
     working_dir: /work
-    command: ["run", "--dry-run", "echo", "installfence sandbox test"]
+    command: ["--dry-run", "run", "echo", "installfence sandbox test"]
 
   env-probe:
     # Real bwrap needs user namespaces; Docker Desktop requires privileged.

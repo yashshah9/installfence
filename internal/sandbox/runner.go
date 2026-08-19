@@ -78,7 +78,7 @@ func RunWithOptions(p policy.Policy, args []string, opts Options) (Result, error
 	return Result{
 		Command:    cmdStr,
 		ExitCode:   exitCode,
-		DryRun:     true,
+		DryRun:     false,
 		Message:    "sandbox backend not found; running passthrough (unsafe)",
 		Violations: collector,
 	}, nil

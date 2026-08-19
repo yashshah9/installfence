@@ -3,12 +3,15 @@ package cli
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/installfence/installfence/internal/policy"
 	"github.com/installfence/installfence/internal/sandbox"
 	"github.com/installfence/installfence/internal/violations"
 	"github.com/spf13/cobra"
 )
+
+const Version = "0.3.0"
 
 var (
 	policyFile        string
@@ -24,8 +27,11 @@ func Execute() error {
 
 func newRoot() *cobra.Command {
 	root := &cobra.Command{
-		Use:   "installfence",
-		Short: "Sandboxed package installation for pip, uv, npm, and more",
+		Use:           "installfence",
+		Short:         "Sandboxed package installation for pip, uv, npm, and more",
+		SilenceUsage:  true,
+		SilenceErrors: true,
+		Version:       Version,
 	}
 
 	root.PersistentFlags().StringVar(&policyFile, "policy", "", "Path to policy YAML")
@@ -49,7 +55,7 @@ func healthCmd() *cobra.Command {
 		Use:   "health",
 		Short: "Check installfence installation and sandbox availability",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			fmt.Println("installfence OK")
+			fmt.Printf("installfence %s OK\n", Version)
 			if sandbox.HasBubblewrap() {
 				fmt.Println("  bubblewrap: available")
 			} else {
@@ -58,6 +64,8 @@ func healthCmd() *cobra.Command {
 			if sandbox.HasSandboxExec() {
 				fmt.Println("  sandbox-exec: available")
 			}
+			fmt.Println("  flags like --dry-run and --require-sandbox go before the tool name:")
+			fmt.Println("    installfence --dry-run pip install requests")
 			return nil
 		},
 	}
@@ -98,6 +106,9 @@ func executeSandboxed(args []string) error {
 		FailOnViolation: failOnViolation,
 	})
 	if err != nil {
+		if isNamespaceError(err) {
+			return fmt.Errorf("%w\nDocker Compose needs privileged: true for bubblewrap user namespaces", err)
+		}
 		return err
 	}
 	if result.Violations != nil && !result.Violations.Empty() {
@@ -115,4 +126,9 @@ func executeSandboxed(args []string) error {
 		os.Exit(result.ExitCode)
 	}
 	return nil
+}
+
+func isNamespaceError(err error) bool {
+	msg := strings.ToLower(err.Error())
+	return strings.Contains(msg, "namespace") || strings.Contains(msg, "operation not permitted")
 }

@@ -11,6 +11,7 @@ Package install hooks execute arbitrary code with your full user privileges. npm
 ## Key features (v0.2)
 
 - Wrap `pip`, `uv`, `npm`, or any command in a bubblewrap sandbox (Linux)
+- PATH shims: `installfence shim install` then `eval "$(installfence shim env)"`
 - Default policy hides `~/.ssh`, `~/.aws`, `~/.gnupg`, and secret env vars at runtime
 - `--json-violations` / `--fail-on-violation` (exit 42) for CI
 - `--require-sandbox` instead of unsandboxed passthrough
@@ -49,7 +50,8 @@ go mod tidy
 go test ./... -v
 go build -o bin/installfence ./cmd/installfence
 ./bin/installfence health
-./bin/installfence run --dry-run pip install requests
+./bin/installfence --dry-run pip install requests
+./bin/installfence run --dry-run -- pip install requests
 ```
 
 ## Docker
@@ -88,11 +90,13 @@ hide_env_keys:
 
 ```bash
 installfence health
+installfence --dry-run pip install requests
 installfence pip install requests
 installfence uv pip install -r requirements.txt
 installfence npm install
 installfence run -- pip install -e .
-installfence run --dry-run npm ci
+installfence shim install
+eval "$(installfence shim env)"
 ```
 
 ## Running tests
@@ -105,11 +109,12 @@ go test ./... -v
 
 - [x] Violation reporting (structured logs + CI exit code)
 - [x] macOS sandbox-exec backend (best-effort)
-- [ ] Shell shims for transparent PATH interception
+- [x] Shell shims for transparent PATH interception
 - [ ] Top-100 package compatibility test matrix
 
-## Known limitations (v0.2)
+## Known limitations (v0.3)
 
+- Flags such as `--dry-run` and `--require-sandbox` must go **before** `pip`/`npm`/`uv` (`installfence pip` disables cobra flag parsing so pip flags pass through)
 - Linux bubblewrap needs user namespaces (Docker Compose `privileged: true` for real sandbox)
 - macOS Seatbelt profile is best-effort, not a full bwrap parity matrix
 - No install-script allowlist integration with npm 12
