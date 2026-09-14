@@ -10,3 +10,13 @@ hide_env_keys:
 # Writable overrides for native builds (host path must exist):
 # allow_write_paths:
 #   - /tmp/build-cache
+# npm lifecycle scripts when wrapping npm/npx install|ci|add:
+#   always      — run sandboxed (default; current behavior)
+#   allowlisted — empty npm_script_allowlist → --ignore-scripts;
+#                 non-empty → sandboxed without forcing ignore-scripts
+#                 (list reserved for future script-name filtering)
+#   never       — always append --ignore-scripts
+# npm_wrap_scripts: always
+# npm_script_allowlist:
+#   - esbuild
+#   - sharp

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0] - 2026-09-14
+
+### Added
+- Policy `npm_wrap_scripts: always|allowlisted|never` (default `always`) for npm/npx install-like commands
+- Optional `npm_script_allowlist` — empty allowlist with `allowlisted` forces `--ignore-scripts`; non-empty keeps sandboxed installs (list reserved for future script-name filtering)
+- `installfence npx` convenience wrapper
+
 ## [0.5.0] - 2026-09-14
 
 ### Added

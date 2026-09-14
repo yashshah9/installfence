@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const Version = "0.5.0"
+const Version = "0.6.0"
 
 var (
 	policyFile        string
@@ -46,6 +46,7 @@ func newRoot() *cobra.Command {
 	root.AddCommand(wrapCmd("pip"))
 	root.AddCommand(wrapCmd("uv"))
 	root.AddCommand(wrapCmd("npm"))
+	root.AddCommand(wrapCmd("npx"))
 
 	return root
 }
@@ -101,6 +102,7 @@ func executeSandboxed(args []string) error {
 	if dryRun {
 		p.DryRun = true
 	}
+	args = policy.ApplyNpmWrapScripts(p, args)
 	result, err := sandbox.RunWithOptions(p, args, sandbox.Options{
 		RequireSandbox:  requireSandbox,
 		FailOnViolation: failOnViolation,
