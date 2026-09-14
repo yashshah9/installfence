@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.0] - 2026-09-14
+
+### Added
+- `allow_write_paths` policy field — bind-mount writable exceptions for native builds (host path must exist)
+
 ## [0.3.0] - 2026-08-19
 
 ### Added

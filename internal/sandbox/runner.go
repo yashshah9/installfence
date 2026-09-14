@@ -197,6 +197,15 @@ func buildBwrapArgs(p policy.Policy, args []string) []string {
 			bwrap = append(bwrap, "--tmpfs", path)
 		}
 	}
+	for _, path := range p.AllowWritePaths {
+		if path == "" {
+			continue
+		}
+		expanded := os.ExpandEnv(path)
+		if _, err := os.Stat(expanded); err == nil {
+			bwrap = append(bwrap, "--bind", expanded, expanded)
+		}
+	}
 	for _, key := range p.HideEnvKeys {
 		bwrap = append(bwrap, "--unsetenv", key)
 	}

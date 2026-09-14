@@ -7,3 +7,6 @@ hide_env_keys:
   - AWS_SECRET_ACCESS_KEY
   - GITHUB_TOKEN
   - NPM_TOKEN
+# Writable overrides for native builds (host path must exist):
+# allow_write_paths:
+#   - /tmp/build-cache

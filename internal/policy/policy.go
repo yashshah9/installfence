@@ -9,10 +9,11 @@ import (
 
 // Policy defines sandbox rules for package installs.
 type Policy struct {
-	HidePaths    []string `yaml:"hide_paths"`
-	HideEnvKeys  []string `yaml:"hide_env_keys"`
-	AllowNetwork bool     `yaml:"allow_network"`
-	DryRun       bool     `yaml:"dry_run"`
+	HidePaths       []string `yaml:"hide_paths"`
+	HideEnvKeys     []string `yaml:"hide_env_keys"`
+	AllowWritePaths []string `yaml:"allow_write_paths"`
+	AllowNetwork    bool     `yaml:"allow_network"`
+	DryRun          bool     `yaml:"dry_run"`
 }
 
 // Default returns a sensible default policy hiding common secret locations.

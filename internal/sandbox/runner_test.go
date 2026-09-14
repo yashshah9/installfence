@@ -28,6 +28,16 @@ func TestBuildBwrapArgsUnsharesNetWhenDenied(t *testing.T) {
 	}
 }
 
+func TestBuildBwrapArgsAllowWritePaths(t *testing.T) {
+	dir := t.TempDir()
+	p := policy.Policy{AllowNetwork: true, AllowWritePaths: []string{dir}}
+	args := buildBwrapArgs(p, []string{"true"})
+	joined := strings.Join(args, " ")
+	if !strings.Contains(joined, "--bind "+dir+" "+dir) {
+		t.Fatalf("expected --bind for allow_write_paths, got %v", args)
+	}
+}
+
 func TestScrubEnvRemovesHiddenKeys(t *testing.T) {
 	t.Setenv("GITHUB_TOKEN", "secret")
 	t.Setenv("KEEP_ME", "yes")

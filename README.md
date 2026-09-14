@@ -2,17 +2,39 @@
 
 Sandboxed package installation for **pip**, **uv**, **npm**, and other package managers. Install scripts run inside a kernel-level sandbox where SSH keys, cloud credentials, and `.env` files are hidden.
 
-> **Status:** v0.3 — violation reporting plus PATH shims (`installfence shim install`).
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Go 1.22+](https://img.shields.io/badge/go-1.22+-00ADD8.svg)](https://go.dev/)
+[![CI](https://github.com/yashshah9/installfence/actions/workflows/ci.yml/badge.svg)](https://github.com/yashshah9/installfence/actions/workflows/ci.yml)
+
+> **Status:** v0.4 — violation reporting, PATH shims, and `allow_write_paths` for native builds.
+
+## 60-second try
+
+```bash
+docker compose run --rm health       # binary health check
+docker compose run --rm sandbox-pip  # dry-run sandbox plan
+docker compose run --rm dev          # go test ./...
+```
+
+## Why this vs alternatives
+
+| Approach | Strength | Gap |
+|----------|----------|-----|
+| **installfence** | Policy YAML + bubblewrap/shim for pip/uv/npm | Linux-first; macOS is best-effort |
+| `npm install --ignore-scripts` | Blocks lifecycle scripts | No Python/uv coverage; approved scripts still unsandboxed |
+| Manual bubblewrap | Full control | No package-manager UX or default secret policy |
+| Full Docker per install | Strong isolation | Heavyweight for every `pip install` |
 
 ## Problem
 
 Package install hooks execute arbitrary code with your full user privileges. npm 12 now blocks lifecycle scripts by default, but approved scripts still run unsandboxed. **Python has no equivalent** — every `pip install` can read `~/.ssh` and environment secrets.
 
-## Key features (v0.2)
+## Key features (v0.4)
 
 - Wrap `pip`, `uv`, `npm`, or any command in a bubblewrap sandbox (Linux)
 - PATH shims: `installfence shim install` then `eval "$(installfence shim env)"`
 - Default policy hides `~/.ssh`, `~/.aws`, `~/.gnupg`, and secret env vars at runtime
+- `allow_write_paths` — bind-mount writable exceptions for native builds (paths must exist on the host)
 - `--json-violations` / `--fail-on-violation` (exit 42) for CI
 - `--require-sandbox` instead of unsandboxed passthrough
 - macOS `sandbox-exec` backend when available
@@ -76,7 +98,12 @@ hide_paths:
 hide_env_keys:
   - GITHUB_TOKEN
   - AWS_SECRET_ACCESS_KEY
+# Writable overrides for native builds (host path must exist):
+# allow_write_paths:
+#   - /tmp/build-cache
 ```
+
+`allow_write_paths` adds `--bind` mounts on top of the read-only root. Use it when compilers or package build scripts need a writable cache or scratch directory. Paths are expanded (`~` supported) and skipped if they do not exist on the host.
 
 | Flag | Description |
 |------|-------------|
@@ -110,15 +137,17 @@ go test ./... -v
 - [x] Violation reporting (structured logs + CI exit code)
 - [x] macOS sandbox-exec backend (best-effort)
 - [x] Shell shims for transparent PATH interception
+- [x] `allow_write_paths` policy for native builds
 - [ ] Top-100 package compatibility test matrix
 
-## Known limitations (v0.3)
+## Known limitations (v0.4)
 
 - Flags such as `--dry-run` and `--require-sandbox` must go **before** `pip`/`npm`/`uv` (`installfence pip` disables cobra flag parsing so pip flags pass through)
 - Linux bubblewrap needs user namespaces (Docker Compose `privileged: true` for real sandbox)
 - macOS Seatbelt profile is best-effort, not a full bwrap parity matrix
 - No install-script allowlist integration with npm 12
-- Native builds may need policy exceptions for compiler access
+- Native builds may need `allow_write_paths` exceptions for compiler/cache access
+- `allow_write_paths` entries that do not exist on the host are skipped
 
 ## License
 
