@@ -1,7 +1,9 @@
 package sandbox
 
 import (
+	"bytes"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"runtime"
@@ -89,9 +91,11 @@ func runBwrap(p policy.Policy, args []string, collector *violations.Collector) (
 	cmd := exec.Command("bwrap", bwrapArgs...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
+	var stderrBuf bytes.Buffer
+	cmd.Stderr = io.MultiWriter(os.Stderr, &stderrBuf)
 	cmd.Env = scrubEnv(p.HideEnvKeys)
 	err := cmd.Run()
+	collector.ParseStderr(stderrBuf.String())
 	exitCode := 0
 	if err != nil {
 		if exitErr, ok := err.(*exec.ExitError); ok {
@@ -128,9 +132,11 @@ func runSandboxExec(p policy.Policy, args []string, collector *violations.Collec
 	cmd := exec.Command("sandbox-exec", cmdArgs...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
+	var stderrBuf bytes.Buffer
+	cmd.Stderr = io.MultiWriter(os.Stderr, &stderrBuf)
 	cmd.Env = scrubEnv(p.HideEnvKeys)
 	runErr := cmd.Run()
+	collector.ParseStderr(stderrBuf.String())
 	exitCode := 0
 	if runErr != nil {
 		if exitErr, ok := runErr.(*exec.ExitError); ok {

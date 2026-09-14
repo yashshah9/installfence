@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.0] - 2026-09-14
+
+### Added
+- Parse bubblewrap/sandbox stderr for deny patterns (`Permission denied`, `Operation not permitted`, `bwrap:`, `EACCES`) and record structured violations
+- Sandbox runners tee stderr into the violation collector (still streams to the terminal)
+
 ## [0.4.0] - 2026-09-14
 
 ### Added
@@ -21,7 +27,6 @@
 
 ### Notes
 - Real bubblewrap needs Linux user namespaces (Docker: `privileged: true`)
-- Full bwrap audit/seccomp violation parsing is still open
 
 ## [0.1.0] - 2026-08-18
 

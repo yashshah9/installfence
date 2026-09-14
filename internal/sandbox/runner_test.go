@@ -38,6 +38,38 @@ func TestBuildBwrapArgsAllowWritePaths(t *testing.T) {
 	}
 }
 
+func TestBuildBwrapArgsAllowWritePathsEdges(t *testing.T) {
+	dir := t.TempDir()
+	t.Setenv("IF_TEST_DIR", dir)
+
+	tests := []struct {
+		name     string
+		paths    []string
+		wantBind bool
+		bindPath string
+	}{
+		{name: "empty path skipped", paths: []string{""}, wantBind: false},
+		{name: "missing path skipped", paths: []string{"/nonexistent/installfence-test-path"}, wantBind: false},
+		{name: "env expansion", paths: []string{"${IF_TEST_DIR}"}, wantBind: true, bindPath: dir},
+		{name: "mixed valid and invalid", paths: []string{"", dir, "/no/such/path"}, wantBind: true, bindPath: dir},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			p := policy.Policy{AllowNetwork: true, AllowWritePaths: tt.paths}
+			args := buildBwrapArgs(p, []string{"true"})
+			joined := strings.Join(args, " ")
+			hasBind := strings.Contains(joined, "--bind")
+			if hasBind != tt.wantBind {
+				t.Fatalf("--bind present=%v, want %v; args=%v", hasBind, tt.wantBind, args)
+			}
+			if tt.wantBind && tt.bindPath != "" && !strings.Contains(joined, "--bind "+tt.bindPath+" "+tt.bindPath) {
+				t.Fatalf("expected --bind %s, got %v", tt.bindPath, args)
+			}
+		})
+	}
+}
+
 func TestScrubEnvRemovesHiddenKeys(t *testing.T) {
 	t.Setenv("GITHUB_TOKEN", "secret")
 	t.Setenv("KEEP_ME", "yes")

@@ -6,7 +6,7 @@ Sandboxed package installation for **pip**, **uv**, **npm**, and other package m
 [![Go 1.22+](https://img.shields.io/badge/go-1.22+-00ADD8.svg)](https://go.dev/)
 [![CI](https://github.com/yashshah9/installfence/actions/workflows/ci.yml/badge.svg)](https://github.com/yashshah9/installfence/actions/workflows/ci.yml)
 
-> **Status:** v0.4 — violation reporting, PATH shims, and `allow_write_paths` for native builds.
+> **Status:** v0.5 — violation reporting (incl. stderr deny parsing), PATH shims, and `allow_write_paths` for native builds.
 
 ## 60-second try
 
