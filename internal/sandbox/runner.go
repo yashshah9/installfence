@@ -9,8 +9,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/installfence/installfence/internal/policy"
-	"github.com/installfence/installfence/internal/violations"
+	"github.com/yashshah9/installfence/internal/policy"
+	"github.com/yashshah9/installfence/internal/violations"
 )
 
 // Result captures sandbox execution outcome.

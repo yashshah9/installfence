@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/installfence/installfence/internal/policy"
+	"github.com/yashshah9/installfence/internal/policy"
 )
 
 func TestDefaultPolicyHasHidePaths(t *testing.T) {

@@ -5,9 +5,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/installfence/installfence/internal/policy"
-	"github.com/installfence/installfence/internal/sandbox"
-	"github.com/installfence/installfence/internal/violations"
+	"github.com/yashshah9/installfence/internal/policy"
+	"github.com/yashshah9/installfence/internal/sandbox"
+	"github.com/yashshah9/installfence/internal/violations"
 	"github.com/spf13/cobra"
 )
 

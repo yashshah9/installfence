@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/installfence/installfence/internal/cli"
+	"github.com/yashshah9/installfence/internal/cli"
 )
 
 func main() {

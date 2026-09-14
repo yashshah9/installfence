@@ -11,9 +11,11 @@ Sandboxed package installation for **pip**, **uv**, **npm**, and other package m
 ## 60-second try
 
 ```bash
-docker compose run --rm health       # binary health check
-docker compose run --rm sandbox-pip  # dry-run sandbox plan
-docker compose run --rm dev          # go test ./...
+go install github.com/yashshah9/installfence/cmd/installfence@v0.5.0
+installfence health
+# or with Docker:
+docker compose run --rm health
+docker compose run --rm env-probe   # privileged; proves env secrets stay hidden
 ```
 
 ## Why this vs alternatives
@@ -29,12 +31,13 @@ docker compose run --rm dev          # go test ./...
 
 Package install hooks execute arbitrary code with your full user privileges. npm 12 now blocks lifecycle scripts by default, but approved scripts still run unsandboxed. **Python has no equivalent** — every `pip install` can read `~/.ssh` and environment secrets.
 
-## Key features (v0.4)
+## Key features (v0.5)
 
 - Wrap `pip`, `uv`, `npm`, or any command in a bubblewrap sandbox (Linux)
 - PATH shims: `installfence shim install` then `eval "$(installfence shim env)"`
 - Default policy hides `~/.ssh`, `~/.aws`, `~/.gnupg`, and secret env vars at runtime
 - `allow_write_paths` — bind-mount writable exceptions for native builds (paths must exist on the host)
+- Stderr deny parsing → violation records (`Permission denied`, `EACCES`, `bwrap:`)
 - `--json-violations` / `--fail-on-violation` (exit 42) for CI
 - `--require-sandbox` instead of unsandboxed passthrough
 - macOS `sandbox-exec` backend when available
@@ -60,8 +63,10 @@ installfence CLI (Go/cobra)
 ## Installation
 
 ```bash
-go install github.com/installfence/installfence/cmd/installfence@latest
-# or
+go install github.com/yashshah9/installfence/cmd/installfence@v0.5.0
+# or latest tip of main:
+go install github.com/yashshah9/installfence/cmd/installfence@latest
+# or from a clone:
 go build -o bin/installfence ./cmd/installfence
 ```
 

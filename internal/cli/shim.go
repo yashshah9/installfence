@@ -5,7 +5,7 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/installfence/installfence/internal/shim"
+	"github.com/yashshah9/installfence/internal/shim"
 	"github.com/spf13/cobra"
 )
 

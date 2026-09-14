@@ -1,4 +1,4 @@
-module github.com/installfence/installfence
+module github.com/yashshah9/installfence
 
 go 1.22
 
