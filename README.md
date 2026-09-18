@@ -162,9 +162,9 @@ go test ./... -v
 - [x] Shell shims for transparent PATH interception
 - [x] `allow_write_paths` policy for native builds
 - [x] npm wrap script modes (`npm_wrap_scripts` / `npm_script_allowlist`)
-- [ ] Top-100 package compatibility test matrix
+- [x] Top-100 package compatibility test matrix (`compat list|run`)
 
-## Known limitations (v0.6)
+## Known limitations (v0.7)
 
 - Flags such as `--dry-run` and `--require-sandbox` must go **before** `pip`/`npm`/`uv` (`installfence pip` disables cobra flag parsing so pip flags pass through)
 - Linux bubblewrap needs user namespaces (Docker Compose `privileged: true` for real sandbox)
