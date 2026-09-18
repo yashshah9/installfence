@@ -1,0 +1,543 @@
+# installfence compatibility matrix — pure/popular packages for CI smoke + weekly install runs
+version: 1
+packages:
+  - id: pip-requests
+    ecosystem: pip
+    package: requests
+    version: "2.32.3"
+    tags: [pip, smoke, pure]
+    expect_exit: 0
+  - id: pip-urllib3
+    ecosystem: pip
+    package: urllib3
+    version: "2.2.3"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-certifi
+    ecosystem: pip
+    package: certifi
+    version: "2024.8.30"
+    tags: [pip, smoke, pure]
+    expect_exit: 0
+  - id: pip-idna
+    ecosystem: pip
+    package: idna
+    version: "3.10"
+    tags: [pip, smoke, pure]
+    expect_exit: 0
+  - id: pip-charset-normalizer
+    ecosystem: pip
+    package: charset-normalizer
+    version: "3.4.0"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-click
+    ecosystem: pip
+    package: click
+    version: "8.1.7"
+    tags: [pip, smoke, pure]
+    expect_exit: 0
+  - id: pip-rich
+    ecosystem: pip
+    package: rich
+    version: "13.9.2"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-pydantic
+    ecosystem: pip
+    package: pydantic
+    version: "2.9.2"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-typing-extensions
+    ecosystem: pip
+    package: typing-extensions
+    version: "4.12.2"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-pyyaml
+    ecosystem: pip
+    package: pyyaml
+    version: "6.0.2"
+    tags: [pip, smoke, pure]
+    expect_exit: 0
+  - id: pip-toml
+    ecosystem: pip
+    package: toml
+    version: "0.10.2"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-packaging
+    ecosystem: pip
+    package: packaging
+    version: "24.1"
+    tags: [pip, smoke, pure]
+    expect_exit: 0
+  - id: pip-attrs
+    ecosystem: pip
+    package: attrs
+    version: "24.2.0"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-six
+    ecosystem: pip
+    package: six
+    version: "1.16.0"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-python-dateutil
+    ecosystem: pip
+    package: python-dateutil
+    version: "2.9.0.post0"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-jinja2
+    ecosystem: pip
+    package: jinja2
+    version: "3.1.4"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-markupsafe
+    ecosystem: pip
+    package: markupsafe
+    version: "2.1.5"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-httpx
+    ecosystem: pip
+    package: httpx
+    version: "0.27.2"
+    tags: [pip, smoke, pure]
+    expect_exit: 0
+  - id: pip-anyio
+    ecosystem: pip
+    package: anyio
+    version: "4.6.0"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-sniffio
+    ecosystem: pip
+    package: sniffio
+    version: "1.3.1"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-h11
+    ecosystem: pip
+    package: h11
+    version: "0.14.0"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-httpcore
+    ecosystem: pip
+    package: httpcore
+    version: "1.0.6"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-structlog
+    ecosystem: pip
+    package: structlog
+    version: "24.4.0"
+    tags: [pip, smoke, pure]
+    expect_exit: 0
+  - id: pip-orjson
+    ecosystem: pip
+    package: orjson
+    version: "3.10.7"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-msgpack
+    ecosystem: pip
+    package: msgpack
+    version: "1.1.0"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-tabulate
+    ecosystem: pip
+    package: tabulate
+    version: "0.9.0"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-tqdm
+    ecosystem: pip
+    package: tqdm
+    version: "4.66.5"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-filelock
+    ecosystem: pip
+    package: filelock
+    version: "3.16.1"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-platformdirs
+    ecosystem: pip
+    package: platformdirs
+    version: "4.3.6"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-pathspec
+    ecosystem: pip
+    package: pathspec
+    version: "0.12.1"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-pluggy
+    ecosystem: pip
+    package: pluggy
+    version: "1.5.0"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-iniconfig
+    ecosystem: pip
+    package: iniconfig
+    version: "2.0.0"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-pytest
+    ecosystem: pip
+    package: pytest
+    version: "8.3.3"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-coverage
+    ecosystem: pip
+    package: coverage
+    version: "7.6.1"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-mypy-extensions
+    ecosystem: pip
+    package: mypy-extensions
+    version: "1.0.0"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-isort
+    ecosystem: pip
+    package: isort
+    version: "5.13.2"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-black
+    ecosystem: pip
+    package: black
+    version: "24.8.0"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-ruff
+    ecosystem: pip
+    package: ruff
+    version: "0.6.9"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-flake8
+    ecosystem: pip
+    package: flake8
+    version: "7.1.1"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: pip-pycodestyle
+    ecosystem: pip
+    package: pycodestyle
+    version: "2.12.1"
+    tags: [pip, pure]
+    expect_exit: 0
+  - id: npm-lodash
+    ecosystem: npm
+    package: lodash
+    tags: [npm, smoke, pure]
+    expect_exit: 0
+  - id: npm-ms
+    ecosystem: npm
+    package: ms
+    tags: [npm, smoke, pure]
+    expect_exit: 0
+  - id: npm-chalk
+    ecosystem: npm
+    package: chalk
+    tags: [npm, smoke, pure]
+    expect_exit: 0
+  - id: npm-debug
+    ecosystem: npm
+    package: debug
+    tags: [npm, smoke, pure]
+    expect_exit: 0
+  - id: npm-semver
+    ecosystem: npm
+    package: semver
+    tags: [npm, smoke, pure]
+    expect_exit: 0
+  - id: npm-minimist
+    ecosystem: npm
+    package: minimist
+    tags: [npm, smoke, pure]
+    expect_exit: 0
+  - id: npm-commander
+    ecosystem: npm
+    package: commander
+    tags: [npm, smoke, pure]
+    expect_exit: 0
+  - id: npm-glob
+    ecosystem: npm
+    package: glob
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-rimraf
+    ecosystem: npm
+    package: rimraf
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-mkdirp
+    ecosystem: npm
+    package: mkdirp
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-uuid
+    ecosystem: npm
+    package: uuid
+    tags: [npm, smoke, pure]
+    expect_exit: 0
+  - id: npm-nanoid
+    ecosystem: npm
+    package: nanoid
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-picocolors
+    ecosystem: npm
+    package: picocolors
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-source-map
+    ecosystem: npm
+    package: source-map
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-source-map-js
+    ecosystem: npm
+    package: source-map-js
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-json5
+    ecosystem: npm
+    package: json5
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-js-yaml
+    ecosystem: npm
+    package: js-yaml
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-argparse
+    ecosystem: npm
+    package: argparse
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-yargs-parser
+    ecosystem: npm
+    package: yargs-parser
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-y18n
+    ecosystem: npm
+    package: y18n
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-cross-spawn
+    ecosystem: npm
+    package: cross-spawn
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-which
+    ecosystem: npm
+    package: which
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-isexe
+    ecosystem: npm
+    package: isexe
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-path-key
+    ecosystem: npm
+    package: path-key
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-shebang-command
+    ecosystem: npm
+    package: shebang-command
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-shebang-regex
+    ecosystem: npm
+    package: shebang-regex
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-balanced-match
+    ecosystem: npm
+    package: balanced-match
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-brace-expansion
+    ecosystem: npm
+    package: brace-expansion
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-concat-map
+    ecosystem: npm
+    package: concat-map
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-inherits
+    ecosystem: npm
+    package: inherits
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-escape-string-regexp
+    ecosystem: npm
+    package: escape-string-regexp
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-has-flag
+    ecosystem: npm
+    package: has-flag
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-supports-color
+    ecosystem: npm
+    package: supports-color
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-ansi-styles
+    ecosystem: npm
+    package: ansi-styles
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-color-convert
+    ecosystem: npm
+    package: color-convert
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-color-name
+    ecosystem: npm
+    package: color-name
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-wrap-ansi
+    ecosystem: npm
+    package: wrap-ansi
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-strip-ansi
+    ecosystem: npm
+    package: strip-ansi
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-ansi-regex
+    ecosystem: npm
+    package: ansi-regex
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: npm-emoji-regex
+    ecosystem: npm
+    package: emoji-regex
+    tags: [npm, pure]
+    expect_exit: 0
+  - id: uv-requests
+    ecosystem: uv
+    package: requests
+    tags: [uv, smoke, pure]
+    expect_exit: 0
+  - id: uv-urllib3
+    ecosystem: uv
+    package: urllib3
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-certifi
+    ecosystem: uv
+    package: certifi
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-idna
+    ecosystem: uv
+    package: idna
+    tags: [uv, smoke, pure]
+    expect_exit: 0
+  - id: uv-charset-normalizer
+    ecosystem: uv
+    package: charset-normalizer
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-click
+    ecosystem: uv
+    package: click
+    tags: [uv, smoke, pure]
+    expect_exit: 0
+  - id: uv-rich
+    ecosystem: uv
+    package: rich
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-pydantic
+    ecosystem: uv
+    package: pydantic
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-typing-extensions
+    ecosystem: uv
+    package: typing-extensions
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-pyyaml
+    ecosystem: uv
+    package: pyyaml
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-toml
+    ecosystem: uv
+    package: toml
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-packaging
+    ecosystem: uv
+    package: packaging
+    tags: [uv, smoke, pure]
+    expect_exit: 0
+  - id: uv-attrs
+    ecosystem: uv
+    package: attrs
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-six
+    ecosystem: uv
+    package: six
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-python-dateutil
+    ecosystem: uv
+    package: python-dateutil
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-jinja2
+    ecosystem: uv
+    package: jinja2
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-markupsafe
+    ecosystem: uv
+    package: markupsafe
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-httpx
+    ecosystem: uv
+    package: httpx
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-anyio
+    ecosystem: uv
+    package: anyio
+    tags: [uv, pure]
+    expect_exit: 0
+  - id: uv-sniffio
+    ecosystem: uv
+    package: sniffio
+    tags: [uv, pure]
+    expect_exit: 0

@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.0] - 2026-09-18
+
+### Added
+- `installfence compat list|run` — package compatibility matrix (100 packages across pip/npm/uv)
+- `config/compat-matrix.yaml` with `smoke` tags for fast CI
+- `--mode dry-run|install`, `--tag`, `--ecosystem`, `--fail-under`, `--json`
+- Compose services `compat-dry` / `compat-install` and weekly GitHub Actions workflow
+
 ## [0.6.0] - 2026-09-14
 
 ### Added

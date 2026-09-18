@@ -1,0 +1,42 @@
+name: Compat matrix
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+  push:
+    paths:
+      - "config/compat-matrix.yaml"
+      - "internal/compat/**"
+      - "internal/cli/compat.go"
+      - ".github/workflows/compat.yml"
+
+jobs:
+  dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+      - run: go test ./internal/compat/ -v
+      - run: go build -o /tmp/installfence ./cmd/installfence
+      - run: /tmp/installfence compat list --tag smoke
+      - run: /tmp/installfence compat run --tag smoke --mode dry-run --json
+
+  install-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install bubblewrap + package managers
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y bubblewrap python3-pip npm
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+      - run: go build -o /tmp/installfence ./cmd/installfence
+      - name: Sandboxed smoke installs (pip + npm)
+        run: |
+          /tmp/installfence --require-sandbox compat run \
+            --tag smoke --ecosystem pip --ecosystem npm \
+            --mode install --fail-under 0.9

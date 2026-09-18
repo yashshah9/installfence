@@ -43,3 +43,33 @@ services:
       - sh
       - -c
       - if [ -n "$$GITHUB_TOKEN" ]; then echo LEAKED; exit 1; else echo HIDDEN; fi
+
+  compat-dry:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: runtime
+    command: ["compat", "run", "--tag", "smoke", "--mode", "dry-run", "--json"]
+
+  compat-install:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: compat
+    privileged: true
+    command:
+      [
+        "--require-sandbox",
+        "compat",
+        "run",
+        "--tag",
+        "smoke",
+        "--ecosystem",
+        "pip",
+        "--ecosystem",
+        "npm",
+        "--mode",
+        "install",
+        "--fail-under",
+        "0.9",
+      ]

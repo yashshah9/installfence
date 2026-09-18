@@ -6,12 +6,12 @@ Sandboxed package installation for **pip**, **uv**, **npm**, and other package m
 [![Go 1.22+](https://img.shields.io/badge/go-1.22+-00ADD8.svg)](https://go.dev/)
 [![CI](https://github.com/yashshah9/installfence/actions/workflows/ci.yml/badge.svg)](https://github.com/yashshah9/installfence/actions/workflows/ci.yml)
 
-> **Status:** v0.6 — npm wrap script modes (`always`/`allowlisted`/`never`), violation reporting, PATH shims, and `allow_write_paths`.
+> **Status:** v0.7 — npm wrap script modes, violation reporting, PATH shims, `allow_write_paths`, and a **100-package compat matrix**.
 
 ## 60-second try
 
 ```bash
-go install github.com/yashshah9/installfence/cmd/installfence@v0.6.0
+go install github.com/yashshah9/installfence/cmd/installfence@v0.7.0
 installfence health
 # or with Docker:
 docker compose run --rm health
@@ -31,18 +31,17 @@ docker compose run --rm env-probe   # privileged; proves env secrets stay hidden
 
 Package install hooks execute arbitrary code with your full user privileges. npm 12 now blocks lifecycle scripts by default, but approved scripts still run unsandboxed. **Python has no equivalent** — every `pip install` can read `~/.ssh` and environment secrets.
 
-## Key features (v0.6)
+## Key features (v0.7)
 
 - Wrap `pip`, `uv`, `npm`, `npx`, or any command in a bubblewrap sandbox (Linux)
 - PATH shims: `installfence shim install` then `eval "$(installfence shim env)"`
 - Default policy hides `~/.ssh`, `~/.aws`, `~/.gnupg`, and secret env vars at runtime
-- `npm_wrap_scripts` — `always` (sandbox lifecycle scripts), `never` (force `--ignore-scripts`), or `allowlisted` (empty list → ignore-scripts; non-empty → sandboxed, list reserved for future filtering)
-- `allow_write_paths` — bind-mount writable exceptions for native builds (paths must exist on the host)
-- Stderr deny parsing → violation records (`Permission denied`, `EACCES`, `bwrap:`)
-- `--json-violations` / `--fail-on-violation` (exit 42) for CI
+- `npm_wrap_scripts` — `always` (sandbox lifecycle scripts), `never` (force `--ignore-scripts`), or `allowlisted`
+- `allow_write_paths` — bind-mount writable exceptions for native builds
+- **Compat matrix** — `installfence compat run --tag smoke` (100 packages; dry-run or sandboxed install)
+- Stderr deny parsing → violation records; `--json-violations` / `--fail-on-violation` (exit 42)
 - `--require-sandbox` instead of unsandboxed passthrough
 - macOS `sandbox-exec` backend when available
-- `--dry-run` mode without enforcing
 
 ## Architecture
 
@@ -64,12 +63,24 @@ installfence CLI (Go/cobra)
 ## Installation
 
 ```bash
-go install github.com/yashshah9/installfence/cmd/installfence@v0.6.0
+go install github.com/yashshah9/installfence/cmd/installfence@v0.7.0
 # or latest tip of main:
 go install github.com/yashshah9/installfence/cmd/installfence@latest
 # or from a clone:
 go build -o bin/installfence ./cmd/installfence
 ```
+
+## Compatibility matrix
+
+```bash
+installfence compat list --tag smoke
+installfence compat run --tag smoke --mode dry-run
+# Real installs (Linux + bubblewrap; Docker: privileged):
+docker compose run --rm compat-dry
+docker compose run --rm compat-install   # pip+npm smoke under bwrap
+```
+
+Matrix lives in `config/compat-matrix.yaml` (100 packages across pip/npm/uv). CI runs dry-run on every relevant push and smoke installs weekly.
 
 ## Local development
 

@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const Version = "0.6.0"
+const Version = "0.7.0"
 
 var (
 	policyFile        string
@@ -43,6 +43,7 @@ func newRoot() *cobra.Command {
 	root.AddCommand(healthCmd())
 	root.AddCommand(runCmd())
 	root.AddCommand(shimCmd())
+	root.AddCommand(compatCmd())
 	root.AddCommand(wrapCmd("pip"))
 	root.AddCommand(wrapCmd("uv"))
 	root.AddCommand(wrapCmd("npm"))
