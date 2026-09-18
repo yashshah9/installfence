@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.7.1] - 2026-09-19
+
+- Darwin hide-paths: QuoteMeta + deny writes
+
+
 ## [0.7.0] - 2026-09-18
 
 ### Added

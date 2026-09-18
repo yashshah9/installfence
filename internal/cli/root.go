@@ -11,7 +11,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const Version = "0.7.0"
+const Version = "0.7.1"
 
 var (
 	policyFile        string

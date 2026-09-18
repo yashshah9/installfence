@@ -6,6 +6,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"regexp"
 	"runtime"
 	"strings"
 
@@ -164,7 +165,8 @@ func darwinProfile(p policy.Policy) string {
 		if path == "" {
 			continue
 		}
-		fmt.Fprintf(&b, "(deny file-read* (regex #\"%s\"))\n", path)
+		fmt.Fprintf(&b, "(deny file-read* (regex #\"%s\"))\n", regexp.QuoteMeta(path))
+		fmt.Fprintf(&b, "(deny file-write* (regex #\"%s\"))\n", regexp.QuoteMeta(path))
 	}
 	return b.String()
 }
